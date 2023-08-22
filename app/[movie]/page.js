@@ -5,7 +5,6 @@ export default async function page({ searchParams }) {
 
   const imagePath = "https://image.tmdb.org/t/p/w500";
 
-  console.log(movie);
   return (
     <div className="w-[60%] mx-auto mt-10 flex gap-6">
       <Image src={imagePath + movie.poster_path} width={200} height={200} className="rounded-xl mb-2" alt={movie.title} />

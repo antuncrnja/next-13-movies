@@ -2,6 +2,19 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+const SELECT_OPTIONS = [
+  { name: "Popular", value: "popular" },
+  { name: "A-Z", value: "asc" },
+  { name: "Z-A", value: "desc" },
+];
+
+const CATEGORY_OPTIONS = [
+  { name: "Comedy", value: "35" },
+  { name: "Action", value: "28" },
+  { name: "Romance", value: "10749" },
+  { name: "Animation", value: "16" },
+];
+
 export default function Search() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
@@ -54,37 +67,24 @@ export default function Search() {
     setSearchValue("");
   };
 
-  const selectOptions = [
-    { name: "Popular", value: "popular" },
-    { name: "A-Z", value: "asc" },
-    { name: "Z-A", value: "desc" },
-  ];
-
-  const categoryOptions = [
-    { name: "Comedy", value: "35" },
-    { name: "Action", value: "28" },
-    { name: "Romance", value: "10749" },
-    { name: "Animation", value: "16" },
-  ];
-
   return (
     <div>
       <select className="text-black p-2 rounded-lg mb-4" onChange={handleSortChange} value={params.get("sort") || "popular"}>
-        {selectOptions.map((option) => (
+        {SELECT_OPTIONS.map((option) => (
           <option key={option.value} value={option.value}>
             {option.name}
           </option>
         ))}
       </select>
 
-      {categoryOptions.map((option) => (
+      {CATEGORY_OPTIONS.map((option) => (
         <label className="block py-1" key={option.value}>
           <input className="mr-1" type="checkbox" defaultValue={option.value} onChange={(e) => handleCheckboxChange(e, option.value)} checked={isChecked(option.value)} />
           <span>{option.name}</span>
         </label>
       ))}
 
-      <input type="search" className="block mt-4 rounded p-2 text-black" onChange={handleSearchChange} value={searchValue} />
+      <input type="search" placeholder="Search movies" className="block mt-4 rounded p-2 text-black placeholder:text-sm" onChange={handleSearchChange} value={searchValue} />
 
       <button className="text-xs my-5" onClick={handleResetButton}>
         Reset
