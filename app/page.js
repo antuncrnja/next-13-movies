@@ -30,10 +30,10 @@ export default async function Page({ searchParams }) {
   });
 
   return (
-    <main className="w-[70%] mx-auto my-[100px]">
+    <main className="w-[70%] mx-auto my-[100px] flex gap-5">
       <Search />
 
-      <div className="grid grid-cols-6 gap-4 ">
+      <div className="grid grid-cols-4 gap-4 ">
         {sortedMovies.map((movie) => (
           <div key={movie.id}>
             <Link href={`/${movie.title.toLowerCase().replace(/\s+/g, "-") + "?m=" + movie.id}`}>
