@@ -6,12 +6,23 @@ export default async function page({ searchParams }) {
   const imagePath = "https://image.tmdb.org/t/p/w500";
 
   return (
-    <div className="w-[60%] mx-auto mt-10 flex gap-6">
-      <Image src={imagePath + movie.poster_path} width={200} height={200} className="rounded-xl mb-2" alt={movie.title} />
-      <div>
-        <h1 className="text-lg font-bold mb-4">{movie.title}</h1>
-        <p className="text-sm">{movie.overview}</p>
+    <main className="w-[60%] mx-auto my-5">
+      <div className="flex gap-5 mt-20">
+        <Image className="mb-5 rounded-xl" src={imagePath + movie.poster_path} width={300} height={200} priority />
+
+        <div>
+          <p className="bg-yellow-400 font-bold text-black px-2 py-1 inline-block rounded-lg mb-6 text-xsm">{movie.vote_average.toFixed(2)}</p>
+          <h1 className="font-bold text-xl mb-1">{movie.title}</h1>
+          <div className="my-3 mb-5">
+            {movie.genres.map((genre) => (
+              <span className="text-xs bg-slate-700 px-2 py-1 mr-2 rounded-full">{genre.name}</span>
+            ))}
+          </div>
+
+          <small className="mb-4 inline-block text-slate-500">Release date: {movie.release_date}</small>
+          <p className="text-sm max-w-lg text-slate-300">{movie.overview}</p>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

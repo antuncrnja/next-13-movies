@@ -30,18 +30,25 @@ export default async function Page({ searchParams }) {
   });
 
   return (
-    <main className="w-[70%] mx-auto my-[100px] flex gap-5">
-      <Search />
+    <main className="w-[90%] mx-auto my-[100px]">
+      <div className="flex gap-5">
+        <div>
+          <Search />
+        </div>
 
-      <div className="grid grid-cols-4 gap-4 ">
-        {sortedMovies.map((movie) => (
-          <div key={movie.id}>
-            <Link href={`/${movie.title.toLowerCase().replace(/\s+/g, "-") + "?m=" + movie.id}`}>
-              <Image src={imagePath + movie.poster_path} width={200} height={200} className="w-full rounded-xl mb-2" alt={movie.title.replace(" ", "-")} />
-              <h1 className="text-sm">{movie.title}</h1>
-            </Link>
+        <div>
+          <h1 className="text-xl font-bold mb-5">Top 20</h1>
+          <div className="grid grid-cols-5 gap-4 ">
+            {sortedMovies.map((movie) => (
+              <div key={movie.id}>
+                <Link href={`/${movie.title.toLowerCase().replace(/\s+/g, "-") + "?m=" + movie.id}`}>
+                  <Image src={imagePath + movie.poster_path} width={200} height={200} className="w-full rounded-xl mb-2" alt={movie.title.replace(" ", "-")} />
+                  <h1 className="text-sm">{movie.title}</h1>
+                </Link>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </main>
   );

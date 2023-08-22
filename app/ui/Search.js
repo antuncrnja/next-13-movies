@@ -68,26 +68,34 @@ export default function Search() {
   };
 
   return (
-    <div>
-      <select className="text-black p-2 rounded-lg mb-4" onChange={handleSortChange} value={params.get("sort") || "popular"}>
-        {SELECT_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.name}
-          </option>
+    <div className="sticky top-5">
+      <div>
+        <p className="mb-5 font-bold text-sm">SORT</p>
+
+        <select className="text-black p-2 rounded-lg mb-10" onChange={handleSortChange} value={params.get("sort") || "popular"}>
+          {SELECT_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-8">
+        <p className="mb-3 font-bold text-sm">CATEGORIES</p>
+        {CATEGORY_OPTIONS.map((option) => (
+          <label className="block py-1" key={option.value}>
+            <input className="mr-1" type="checkbox" defaultValue={option.value} onChange={(e) => handleCheckboxChange(e, option.value)} checked={isChecked(option.value)} />
+            <span>{option.name}</span>
+          </label>
         ))}
-      </select>
+      </div>
 
-      {CATEGORY_OPTIONS.map((option) => (
-        <label className="block py-1" key={option.value}>
-          <input className="mr-1" type="checkbox" defaultValue={option.value} onChange={(e) => handleCheckboxChange(e, option.value)} checked={isChecked(option.value)} />
-          <span>{option.name}</span>
-        </label>
-      ))}
+      <p className="mb-4 font-bold text-sm">SEARCH</p>
+      <input type="search" placeholder="Popular movies" className="block mt-4 rounded p-2 text-black placeholder:text-sm" onChange={handleSearchChange} value={searchValue} />
 
-      <input type="search" placeholder="Search movies" className="block mt-4 rounded p-2 text-black placeholder:text-sm" onChange={handleSearchChange} value={searchValue} />
-
-      <button className="text-xs my-5" onClick={handleResetButton}>
-        Reset
+      <button className="text-xs mt-8 text-gray-400" onClick={handleResetButton}>
+        Reset filters
       </button>
     </div>
   );
