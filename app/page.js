@@ -1,22 +1,11 @@
-import Image from "next/image";
 import Search from "./ui/Search";
-import Link from "next/link";
+import MovieCard from "./ui/MovieCard";
 
 export default async function Page({ searchParams }) {
   const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`, { next: { revalidate: 300 } });
   const movies = await res.json();
 
-  const imagePath = "https://image.tmdb.org/t/p/w500";
-
-  let sortedMovies = movies.results.sort((a, b) => {
-    if (searchParams.sort === "asc") {
-      return a.title.localeCompare(b.title);
-    } else if (searchParams.sort === "desc") {
-      return b.title.localeCompare(a.title);
-    } else {
-      return;
-    }
-  });
+  let sortedMovies = movies.results.sort((a, b) => (searchParams.sort === "asc" ? a.title.localeCompare(b.title) : searchParams.sort === "desc" ? b.title.localeCompare(a.title) : 0));
 
   sortedMovies = sortedMovies.filter((movie) => {
     if (!searchParams.search && !searchParams.cat) {
@@ -39,13 +28,9 @@ export default async function Page({ searchParams }) {
         <div>
           <h1 className="text-xl font-bold mb-5">Top 20</h1>
           <div className="grid grid-cols-5 gap-4 ">
+            {sortedMovies.length === 0 && <p className="text-sm">There are no movies with these filters</p>}
             {sortedMovies.map((movie) => (
-              <div key={movie.id}>
-                <Link href={`/${movie.title.toLowerCase().replace(/\s+/g, "-") + "?m=" + movie.id}`}>
-                  <Image src={imagePath + movie.poster_path} width={200} height={200} className="w-full rounded-xl mb-2" alt={movie.title.replace(" ", "-")} />
-                  <h1 className="text-sm">{movie.title}</h1>
-                </Link>
-              </div>
+              <MovieCard movie={movie} />
             ))}
           </div>
         </div>
